@@ -51,7 +51,7 @@ fi
 skip_mingw32=no
 DEBUG_BUILD_OPTIONS=
 is_ppa_release=no
-skip_manual=no
+skip_manual=yes
 MULTILIB_LIST="--with-multilib-list=armv6-m,armv7-m,armv7e-m,armv7-r"
 for ac_arg; do
     case $ac_arg in
@@ -84,20 +84,19 @@ if [ "x$is_ppa_release" != "xyes" ]; then
   ENV_LDFLAGS=" -L$BUILDDIR_NATIVE/host-libs/zlib/lib
                 -L$BUILDDIR_NATIVE/host-libs/usr/lib "
 
-  GCC_CONFIG_OPTS=" --build=$BUILD --host=$HOST_NATIVE
-                    --with-gmp=$BUILDDIR_NATIVE/host-libs/usr
+# for Raspberry Pi, let configure find the build and host settings
+  GCC_CONFIG_OPTS=" --with-gmp=$BUILDDIR_NATIVE/host-libs/usr
                     --with-mpfr=$BUILDDIR_NATIVE/host-libs/usr
                     --with-mpc=$BUILDDIR_NATIVE/host-libs/usr
                     --with-isl=$BUILDDIR_NATIVE/host-libs/usr
                     --with-cloog=$BUILDDIR_NATIVE/host-libs/usr
                     --with-libelf=$BUILDDIR_NATIVE/host-libs/usr "
 
-  BINUTILS_CONFIG_OPTS=" --build=$BUILD --host=$HOST_NATIVE "
+  BINUTILS_CONFIG_OPTS=" "
 
-  NEWLIB_CONFIG_OPTS=" --build=$BUILD --host=$HOST_NATIVE "
+  NEWLIB_CONFIG_OPTS=" "
 
-  GDB_CONFIG_OPTS=" --build=$BUILD --host=$HOST_NATIVE
-                    --with-libexpat-prefix=$BUILDDIR_NATIVE/host-libs/usr "
+  GDB_CONFIG_OPTS=" --with-libexpat-prefix=$BUILDDIR_NATIVE/host-libs/usr "
 fi
 
 
